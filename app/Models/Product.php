@@ -17,6 +17,7 @@ class Product extends Model
         'price',
         'discounted_price',
         'stock',
+        'slug',
     ];
 
     // Relationship to files

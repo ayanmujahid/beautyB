@@ -106,9 +106,10 @@
                             @forelse($products as $product)
                             <tr>
                                 <td>
-                                    <img src="{{ asset('storage/' . $product->mainImage->url) }}"
-                                        class="rounded"
-                                        width="50">
+                                    <img src="{{ asset($product) }}"
+     class="rounded"
+     width="50">
+
                                 </td>
                                 <td>{{ $product->name }}</td>
                                 <td>${{ $product->price }}</td>
@@ -153,9 +154,9 @@
         </div>
 
         {{-- PAGINATION --}}
-        <div class="mt-3">
+        {{-- <div class="mt-3">
             {{ $products->withQueryString()->links() }}
-        </div>
+        </div> --}}
 
     </div>
 </div>

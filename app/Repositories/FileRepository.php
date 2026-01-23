@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File as HttpFile;
 
 class FileRepository
 {
@@ -46,4 +47,32 @@ class FileRepository
             $this->delete($file);
         }
     }
+
+    public function uploadFromPath(string $path, $fileable, $tableName = 'default')
+{
+    // If image is a URL → download it
+    if (filter_var($path, FILTER_VALIDATE_URL)) {
+        $contents = file_get_contents($path);
+        $filename = basename(parse_url($path, PHP_URL_PATH));
+
+        Storage::disk('public')->put("uploads/{$filename}", $contents);
+        $storedPath = "uploads/{$filename}";
+    }
+    // If image exists locally
+    elseif (file_exists(public_path($path))) {
+        $storedPath = Storage::disk('public')->putFile(
+            'uploads',
+            new HttpFile(public_path($path))
+        );
+    }
+    else {
+        // Invalid path → skip safely
+        return null;
+    }
+
+    return $fileable->files()->create([
+        'url'        => $storedPath,
+        'table_name' => $tableName
+    ]);
+}
 }

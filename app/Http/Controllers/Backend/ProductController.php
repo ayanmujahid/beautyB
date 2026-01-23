@@ -86,6 +86,7 @@ class ProductController extends Controller
             'main_image' => 'nullable|image',
             'gallery.*' => 'nullable|image',
         ]);
+        $slug = $this->slug_maker($request->input('name'), Product::class);
 
         $product = Product::create([
             'category_id' => $request->category_id,
@@ -96,6 +97,8 @@ class ProductController extends Controller
             'price' => $request->price,
             'stock' => $request->stock,
             'discounted_price' => $request->discounted_price,
+            'slug' => $slug,
+
         ]);
 
         // Handle files
@@ -197,67 +200,103 @@ class ProductController extends Controller
 
     public function bulk()
     {
-        return view('admin.products-management.bulk')->with('title', 'Add Bulk Product');
+        return view('admin.product-management.bulk')->with('title', 'Add Bulk Product');
     }
 
 
     public function importProductsCsv(Request $request)
-    {
-        $request->validate([
-            'csv_file' => 'required|mimes:csv,txt'
-        ]);
+{
+    $request->validate([
+        'csv_file' => 'required|mimes:csv,txt'
+    ]);
 
-        $path = $request->file('csv_file')->getRealPath();
-        $file = fopen($path, 'r');
+    $path = $request->file('csv_file')->getRealPath();
+    $file = fopen($path, 'r');
 
-        $header = fgetcsv($file); // CSV headers
+    $header = fgetcsv($file);
 
-        while (($row = fgetcsv($file)) !== false) {
+    while (($row = fgetcsv($file)) !== false) {
 
-            $rowData = array_combine($header, $row);
+        $rowData = array_combine($header, $row);
 
-            // ✅ Create product (same fields as store())
-            $product = Product::create([
-                'category_id'        => $rowData['category_id'] ?? null,
-                'sub_category_id'    => $rowData['sub_category_id'] ?? null,
+        // 🧼 Clean empty strings → null
+        $rowData = array_map(function ($value) {
+            return trim($value) === '' || trim($value) === '0' ? null : trim($value);
+        }, $rowData);
+
+        // 🧠 Resolve category values safely
+        $categoryId = is_numeric($rowData['category_id'] ?? null)
+            ? (int) $rowData['category_id']
+            : null;
+
+        $subCategoryId = is_numeric($rowData['sub_category_id'] ?? null)
+            ? (int) $rowData['sub_category_id']
+            : null;
+
+        // 🔍 Find existing product (by slug or name)
+        $product = Product::where('slug', $rowData['slug'] ?? null)
+            ->orWhere('name', $rowData['name'])
+            ->first();
+
+        // 📦 Create or Update
+        if ($product) {
+            $product->update([
+                'category_id'        => $categoryId,
+                'sub_category_id'    => $subCategoryId,
                 'name'               => $rowData['name'],
-                'short_description'  => $rowData['short_description'] ?? null,
-                'long_description'   => $rowData['long_description'] ?? null,
+                // 'short_description'  => $rowData['short_description'],
+                'long_description'   => $rowData['long_description'],
                 'price'              => $rowData['price'],
-                'discounted_price'   => $rowData['discounted_price'] ?? null,
+                'discounted_price'   => $rowData['discounted_price'],
                 'stock'              => $rowData['stock'] ?? 0,
+                'slug'               => $rowData['slug'] ?? $product->slug,
             ]);
 
-            // ✅ Main Image (image path or URL)
-            if (!empty($rowData['main_image'])) {
-                $this->fileRepo->uploadFromPath(
-                    $rowData['main_image'],
-                    $product,
-                    'main_image'
-                );
-            }
+            // 🧹 Optional: clear old images before re-adding
+            $this->fileRepo->deleteAll($product, 'main_image');
+            $this->fileRepo->deleteAll($product, 'gallery');
 
-            // ✅ Gallery Images (comma-separated)
-            if (!empty($rowData['gallery'])) {
+        } else {
+            $product = Product::create([
+                'category_id'        => $categoryId,
+                'sub_category_id'    => $subCategoryId,
+                'name'               => $rowData['name'],
+                // 'short_description'  => $rowData['short_description'],
+                'long_description'   => $rowData['long_description'],
+                'price'              => $rowData['price'],
+                'discounted_price'   => $rowData['discounted_price'],
+                'stock'              => $rowData['stock'] ?? 0,
+                'slug'               => $rowData['slug'] ?? \Str::slug($rowData['name']),
+            ]);
+        }
 
-                $images = explode(',', $rowData['gallery']);
+        // 🖼 Main Image
+        if (!empty($rowData['main_image'])) {
+            $this->fileRepo->uploadFromPath(
+                $rowData['main_image'],
+                $product,
+                'main_image'
+            );
+        }
 
-                foreach ($images as $img) {
-                    $img = trim($img);
-
-                    if ($img) {
-                        $this->fileRepo->uploadFromPath(
-                            $img,
-                            $product,
-                            'gallery'
-                        );
-                    }
+        // 🖼 Gallery Images
+        if (!empty($rowData['gallery'])) {
+            foreach (explode(',', $rowData['gallery']) as $img) {
+                $img = trim($img);
+                if ($img) {
+                    $this->fileRepo->uploadFromPath(
+                        $img,
+                        $product,
+                        'gallery'
+                    );
                 }
             }
         }
-
-        fclose($file);
-
-        return back()->with('success', 'Products Imported Successfully!');
     }
+
+    fclose($file);
+
+    return back()->with('success', 'Products Imported / Updated Successfully!');
+}
+
 }

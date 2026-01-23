@@ -1,6 +1,8 @@
-@extends('admin.dash_layouts.main')
+@extends('admin.layouts.main')
+
 @section('content')
-    @include('admin.dash_layouts.sidebar')
+    @include('admin.layouts.sidebar')
+
     <div class="main-sec">
         <div class="main-wrapper">
             <div class="primary-heading color-dark">
@@ -72,82 +74,5 @@
     <script src="{{ asset('admin/js/file-upload.js') }}"></script>
     <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 
-    <script type="text/javascript">
-        function validateAndSubmit() {
-            var fieldsToValidate = [{
-                id: "long_desc",
-                editorId: "long_desc_editor"
-            }];
-
-            var allFieldsValid = true;
-
-            for (var i = 0; i < fieldsToValidate.length; i++) {
-                var field = fieldsToValidate[i];
-                if (!validateField(field.id, field.editorId)) {
-                    allFieldsValid = false;
-                }
-            }
-            console.log(allFieldsValid)
-            if (allFieldsValid) {
-                $("#add-record-form").submit();
-            }
-        }
-
-        function validateField(fieldId, editorId) {
-            var fieldValue = CKEDITOR.instances[editorId].getData().trim();
-            var fieldName = $("#" + editorId).attr("placeholder");
-            if (fieldValue === "") {
-                $.toast({
-                    heading: "Error!",
-                    position: "bottom-right",
-                    text: fieldName + " is Required!",
-                    loaderBg: "#ff6849",
-                    icon: "error",
-                    hideAfter: 2000,
-                    stack: 6,
-                });
-                return false;
-            }
-
-            $("#" + fieldId).val(fieldValue);
-            return true;
-        }
-
-        $(document).ready(function() {
-            $("#form-submit-btn").click(function(e) {
-                e.preventDefault();
-                validateAndSubmit();
-            });
-        });
-
-
-
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#category_id').on('change', function () {
-                var categoryId = $(this).val();
-                var subCategoryDropdown = $('#subCategory');
     
-                subCategoryDropdown.prop('disabled', true);
-                subCategoryDropdown.empty();
-    
-                if (categoryId !== "") {
-                    $.ajax({
-                        url: '{{ route("getSubcategories") }}',
-                        type: 'GET',
-                        data: { category_id: categoryId },
-                        success: function (data) {
-                            subCategoryDropdown.append('<option value="" disabled selected>Select Sub Category</option>');
-                            $.each(data, function (key, value) {
-                                subCategoryDropdown.append('<option value="' + value.id + '">' + value.title + '</option>');
-                            });
-                            subCategoryDropdown.prop('disabled', false);
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 @endsection
