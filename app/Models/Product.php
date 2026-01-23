@@ -9,6 +9,8 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'category_id',
+        'sub_category_id',
         'name',
         'short_description',
         'long_description',
@@ -31,5 +33,16 @@ class Product extends Model
     public function gallery()
     {
         return $this->morphMany(File::class, 'fileable')->where('table_name', 'gallery');
+    }
+
+
+    public function category()
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
+
+    public function subCategory()
+    {
+        return $this->belongsTo(ProductSubCategory::class);
     }
 }

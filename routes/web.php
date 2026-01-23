@@ -74,6 +74,14 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('das
 
 Route::post('/admin/signup', [AdminController::class, 'registerSubmit'])->name('admin.register.submit');
 Route::post('/admin/login/submit',    [AdminController::class, 'loginSubmit'])->name('admin.login.submit');
+Route::get(
+    '/admin/categories/{category}/sub-categories',
+    [ProductController::class, 'subCategories']
+)->name('admin.categories.subcategories');
+
+
+Route::post('/admin/products-bulk-upload-submit', [ProductController::class, 'importProductsCsv'])->name('admin.importProductsCsv');
+  Route::get('/admin/products-bulk-upload', [ProductController::class, 'bulk'])->name('admin.bulkUpload');
 
 
 Route::prefix('admin')
