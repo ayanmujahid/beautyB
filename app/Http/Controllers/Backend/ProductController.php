@@ -10,6 +10,7 @@ use App\Repositories\FileRepository;
 use Illuminate\Http\Request;
 
 
+
 class ProductController extends Controller
 {
     //
@@ -116,7 +117,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-         $categories = ProductCategory::orderBy('name')->get();
+        $categories = ProductCategory::orderBy('name')->get();
 
         return view('admin.product-management.edit', compact('product', 'categories'));
     }
@@ -194,7 +195,7 @@ class ProductController extends Controller
     }
 
 
-     public function bulk ()
+    public function bulk()
     {
         return view('admin.products-management.bulk')->with('title', 'Add Bulk Product');
     }
@@ -209,39 +210,47 @@ class ProductController extends Controller
         $path = $request->file('csv_file')->getRealPath();
         $file = fopen($path, 'r');
 
-        $header = fgetcsv($file); // read header row
+        $header = fgetcsv($file); // CSV headers
 
         while (($row = fgetcsv($file)) !== false) {
 
             $rowData = array_combine($header, $row);
 
-            // 1️⃣ Create Product
+            // ✅ Create product (same fields as store())
             $product = Product::create([
-                'title'           => $rowData['title'],
-                'slug'            => $rowData['slug'],
-                'price'           => $rowData['price'],
-                'old_price'       => $rowData['old_price'],
-                'category_id'     => $rowData['category_id'],
-                'sub_category_id' => null,
-                'short_desc'      => null,
-                'long_desc'       => null,
-                'is_featured'     => 0,
-                'img_path'        => $rowData['main_image'],   // 1st image
+                'category_id'        => $rowData['category_id'] ?? null,
+                'sub_category_id'    => $rowData['sub_category_id'] ?? null,
+                'name'               => $rowData['name'],
+                'short_description'  => $rowData['short_description'] ?? null,
+                'long_description'   => $rowData['long_description'] ?? null,
+                'price'              => $rowData['price'],
+                'discounted_price'   => $rowData['discounted_price'] ?? null,
+                'stock'              => $rowData['stock'] ?? 0,
             ]);
 
-            // 2️⃣ Additional Images
-            if (!empty($rowData['other_images'])) {
+            // ✅ Main Image (image path or URL)
+            if (!empty($rowData['main_image'])) {
+                $this->fileRepo->uploadFromPath(
+                    $rowData['main_image'],
+                    $product,
+                    'main_image'
+                );
+            }
 
-                $images = explode(',', $rowData['other_images']);
+            // ✅ Gallery Images (comma-separated)
+            if (!empty($rowData['gallery'])) {
+
+                $images = explode(',', $rowData['gallery']);
 
                 foreach ($images as $img) {
                     $img = trim($img);
 
-                    if ($img != "") {
-                        file::create([
-                            'product_id' => $product->id,
-                            'img_path'   => $img,
-                        ]);
+                    if ($img) {
+                        $this->fileRepo->uploadFromPath(
+                            $img,
+                            $product,
+                            'gallery'
+                        );
                     }
                 }
             }
@@ -249,6 +258,6 @@ class ProductController extends Controller
 
         fclose($file);
 
-        return back()->with('notify_success', 'Products Imported Successfully!');
+        return back()->with('success', 'Products Imported Successfully!');
     }
 }
