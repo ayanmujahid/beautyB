@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class IndexController extends Controller
 {
@@ -15,7 +16,21 @@ class IndexController extends Controller
     // }
     public function index()
     {
-        return view('index')->with('title', 'Home');
+        // Take 8 newest products
+        $newProducts = Product::latest()->take(8)->get();
+
+        // Split new products for two sliders/tabs
+        $upperNewProducts = $newProducts->take(4); // first 4 products
+        $lowerNewProducts = $newProducts->slice(4); // remaining 4 products
+
+        // Featured products
+        $featuredProducts = Product::where('is_featured', 1)->take(8)->get();
+
+        return view('index', compact(
+            'upperNewProducts',
+            'lowerNewProducts',
+            'featuredProducts'
+        ))->with('title', 'Home');
     }
 
     public function aboutUs()

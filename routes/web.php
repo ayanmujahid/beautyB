@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Backend\{AdminController, DashboardController, ProductController, NewsletterController, InquiryController, ProductCategoryController, ProductSubCategoryController, UserController};
+use App\Http\Controllers\Backend\{AdminController, CartController, DashboardController, ProductController, NewsletterController, InquiryController, ProductCategoryController, ProductSubCategoryController, UserController};
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\IndexController;
 
@@ -38,6 +38,23 @@ Route::get('/testimonials', [IndexController::class, 'testimonials'])->name('tes
 Route::get('/wishlist', [IndexController::class, 'wishlist'])->name('wishlist');
 
 // ---------------------------------------For Frontend-----------------------------------
+
+
+// ---------------------------------------For Cart Setup-----------------------------------
+
+// Add product to cart
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+
+
+// View cart
+// Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+// Remove item from cart
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+
+// Get cart data (for dropdown)
+Route::get('/cart/data', [CartController::class, 'data'])->name('cart.data');
+// ---------------------------------------For Cart Setup-----------------------------------
 
 
 

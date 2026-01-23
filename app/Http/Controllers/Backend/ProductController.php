@@ -96,8 +96,10 @@ class ProductController extends Controller
             'long_description' => $request->long_description,
             'price' => $request->price,
             'stock' => $request->stock,
+            'is_featured' => $request->is_featured,
             'discounted_price' => $request->discounted_price,
             'slug' => $slug,
+            
 
         ]);
 
@@ -139,6 +141,7 @@ class ProductController extends Controller
 
             'main_image' => 'nullable|image',
             'gallery.*' => 'nullable|image',
+
         ]);
 
         /**
@@ -163,6 +166,7 @@ class ProductController extends Controller
             'long_description' => $request->long_description,
             'price' => $request->price,
             'discounted_price' => $request->discounted_price,
+            'is_featured' => $request->is_featured,
         ]);
 
         // Update main image (replace)
@@ -265,6 +269,7 @@ class ProductController extends Controller
                 'long_description'   => $rowData['long_description'],
                 'price'              => $rowData['price'],
                 'discounted_price'   => $rowData['discounted_price'],
+                'is_featured'        => $rowData['is_featured'] ?? 0,
                 'stock'              => $rowData['stock'] ?? 0,
                 'slug'               => $rowData['slug'] ?? \Str::slug($rowData['name']),
             ]);

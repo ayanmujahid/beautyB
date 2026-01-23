@@ -18,6 +18,7 @@ class Product extends Model
         'discounted_price',
         'stock',
         'slug',
+        'is_featured',
     ];
 
     // Relationship to files
