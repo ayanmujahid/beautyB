@@ -45,18 +45,28 @@ class CartController extends Controller
 
 
     // Remove product from cart
-    public function remove(Request $request)
-    {
-        $productId = $request->input('product_id');
-        $cart = session()->get('cart', []);
+public function remove(Request $request)
+{
+    $cart = session()->get('cart', []);
 
-        if (isset($cart[$productId])) {
-            unset($cart[$productId]);
-            session()->put('cart', $cart);
-        }
+    unset($cart[$request->id]);
+    session()->put('cart', $cart);
 
-        return response()->json(['success' => true]);
+    $cartTotal = 0;
+    foreach ($cart as $item) {
+        $cartTotal += $item['price'] * $item['quantity'];
     }
+
+    return response()->json([
+        'cart_total' => $cartTotal,
+        'cart_count' => count($cart)
+    ]);
+}
+
+
+
+
+
 
     public function data()
 {
@@ -67,5 +77,31 @@ class CartController extends Controller
         'cart_total' => array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart))
     ]);
 }
+
+public function update(Request $request)
+{
+    $cart = session()->get('cart', []);
+
+    if(isset($cart[$request->id])) {
+        $cart[$request->id]['quantity'] = $request->quantity;
+        session()->put('cart', $cart);
+    }
+
+    // recalc cart total
+    $cartTotal = 0;
+    foreach ($cart as $item) {
+        $cartTotal += $item['price'] * $item['quantity'];
+    }
+
+    return response()->json([
+        'item_total' => $cart[$request->id]['price'] * $cart[$request->id]['quantity'],
+        'cart_total' => $cartTotal,
+    ]);
+}
+
+
+
+
+
 
 }

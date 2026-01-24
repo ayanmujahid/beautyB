@@ -8,6 +8,12 @@ use App\Models\Product;
 
 class IndexController extends Controller
 {
+    public function __construct()
+    {
+        $product = Product::latest()->first(); // ✅ single product
+
+        view()->share('product', $product);
+    }
     //
 
     // public function index(){
@@ -40,7 +46,10 @@ class IndexController extends Controller
 
     public function cart()
     {
-        return view('cart')->with('title', 'Cart');
+        $cart = session('cart', []);
+
+        $total = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+        return view('cart', compact('cart', 'total'))->with('title', 'Cart');
     }
 
     public function checkout()

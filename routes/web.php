@@ -44,6 +44,7 @@ Route::get('/wishlist', [IndexController::class, 'wishlist'])->name('wishlist');
 
 // Add product to cart
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update',[CartController::class,'update']);
 
 
 // View cart

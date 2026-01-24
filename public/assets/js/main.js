@@ -631,7 +631,7 @@
     cartList.append(`
                 <li>
                     <div class="img_content">
-                        <img class="product-image img-responsive" src="${imageUrl}" alt="${item.name}">
+                        <img class="product-image img-responsive" src="${item.image}" alt="${item.name}">
                         <span class="product-quantity">${item.quantity}x</span>
                     </div>
                     <div class="right_block">
