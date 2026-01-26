@@ -124,8 +124,8 @@
             <div class="copyright-inner">
                 <div class="row justify-content-between row-cols-1 row-cols-md-2">
                     <div class="col">
-                        <p>&copy; 2021 <span> Harosa </span> Made with <i class="fa fa-heart"></i> by <a
-                                href="https://hasthemes.com/">HasThemes</a></p>
+                        <p>&copy; 2026 <span> Harosa </span> Made with <i class="fa fa-heart"></i> by <a
+                                href="https://designatrix.com/">Designatrix</a></p>
                     </div>
                     <div class="col text-md-end">
                         <img src="{{asset('assets/images/icons/payment-icon.webp')}}" alt="payment icon">
