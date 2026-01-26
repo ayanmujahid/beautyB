@@ -19,7 +19,6 @@ class IndexController extends Controller
 
         view()->share('product', $product);
         View()->share('categories', $categories);
-
     }
     //
 
@@ -81,10 +80,20 @@ class IndexController extends Controller
         return view('privacy-policy')->with('title', 'Privacy Policy');
     }
 
-    public function productDetails($slug = null)
+    public function productDetails($slug)
     {
-        return view('product-details')->with('title', 'Product Details');
+        $product = Product::with(['mainImage', 'gallery'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $relatedProduct = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->limit(12)
+            ->get();
+
+        return view('product-details', compact('product', 'relatedProduct'))->with('title', $product->name);
     }
+
 
     public function returnPolicy()
     {

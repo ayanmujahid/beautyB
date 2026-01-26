@@ -11,7 +11,7 @@
                         <div class="top-bar-left">
                             <div class="contact-link">
                                 <div class="info_box phone">
-                                    Call us : <span>(012) 800 456 789</span>
+                                    Call us : <span>0314-2957246</span>
                                 </div>
                                 <div class="info_box email">
                                     email : <a href="mailto:demo@example.com">demo@example.com</a>
@@ -235,7 +235,7 @@
 
                 <div class="contact-link">
                     <div class="info_box phone">
-                        Call us : <span>(012) 800 456 789</span>
+                        Call us : <span>0314-2957246</span>
                     </div>
                     <div class="info_box email">
                         email : <a href="mailto:demo@example.com">demo@example.com</a>

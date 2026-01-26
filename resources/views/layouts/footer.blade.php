@@ -10,7 +10,8 @@
                             <p class="desc">(Get 30% OFF coupon today subscibers)</p>
                         </div>
                     </div>
-                    <form action="#">
+                    <form action="{{route('newsletterSubmit')}}" method="POST">
+                        @csrf
                         <input class="btn btn-primary float-xs-right hidden-xs-down" name="submitNewsletter"
                             value="Subscribe" type="submit">
                         <div class="input-wrapper">
@@ -74,7 +75,7 @@
                         <h3>Contact Infor</h3>
                         <div class="footer-contact">
                             <p class="address add">123 Main Street, Anytown, CA 12345 - USA.</p>
-                            <p class="phone add">(+1)866-550-3669</p>
+                            <p class="phone add">0314-2957246</p>
                             <p class="email add"><a href="#">yourmail@domain.com</a></p>
                             <p class="time add">Working time: 9.00 -21.00</p>
                         </div>
@@ -124,7 +125,7 @@
             <div class="copyright-inner">
                 <div class="row justify-content-between row-cols-1 row-cols-md-2">
                     <div class="col">
-                        <p>&copy; 2026 <span> Harosa </span> Made with <i class="fa fa-heart"></i> by <a
+                        <p>&copy; 2026 <span> Beauty B Store </span> Made with <i class="fa fa-heart"></i> by <a
                                 href="https://designatrix.com/">Designatrix</a></p>
                     </div>
                     <div class="col text-md-end">

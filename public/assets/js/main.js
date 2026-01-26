@@ -624,11 +624,11 @@
                 $('.header-cart #cart-total').text('Rs' + parseFloat(res.cart_total).toFixed(2));
 
 
-               res.cart.forEach(item => {
-    // Ensure full URL for image
-    let imageUrl = item.image.startsWith('http') ? item.image : window.location.origin + '/storage/' + item.image;
+                res.cart.forEach(item => {
+                    // Ensure full URL for image
+                    let imageUrl = item.image.startsWith('http') ? item.image : window.location.origin + '/storage/' + item.image;
 
-    cartList.append(`
+                    cartList.append(`
                 <li>
                     <div class="img_content">
                         <img class="product-image img-responsive" src="${item.image}" alt="${item.name}">
@@ -682,25 +682,7 @@
         });
 
         // Remove from cart
-        $(document).on('click', '.remove-from-cart', function (e) {
-            e.preventDefault();
-            const productId = $(this).data('id');
-            $.post('/cart/remove', { product_id: productId }, function (res) {
-                if (res.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Removed from cart',
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    refreshCart();
-                } else {
-                    Swal.fire('Oops', 'Could not remove product.', 'error');
-                }
-            });
-        });
+        
 
     });
 
@@ -708,7 +690,73 @@
 
     // --------------------------------------------Cart VALUES---------------------------------------
 
+$(document).ready(function () {
 
+    // Remove item from header cart dropdown
+    $(document).on('click', '.header-cart .remove-from-cart', function (e) {
+        e.preventDefault();
+
+        let id = $(this).data('id');
+
+        $.post('/cart/remove', {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            id: id
+        }, function (res) {
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Removed from cart',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            // Refresh header cart after remove
+            refreshHeaderCart();
+
+        }).fail(function () {
+            Swal.fire('Error', 'Could not remove item', 'error');
+        });
+    });
+
+    // Refresh header cart
+    function refreshHeaderCart() {
+        $.get('/cart/data', function (res) {
+            if (!res.cart) return;
+
+            const cartList = $('.header-cart > ul');
+            cartList.empty();
+
+            $('#cart-count').text('(' + res.cart_count + ')');
+            $('#cart-total').text('Rs' + parseFloat(res.cart_total).toFixed(2));
+
+            if (res.cart.length === 0) {
+                cartList.append(`<li class="text-center">Cart is empty</li>`);
+                return;
+            }
+
+            res.cart.forEach(item => {
+                cartList.append(`
+                    <li>
+                        <div class="img_content">
+                            <img src="${item.image}" class="product-image img-responsive" alt="${item.name}">
+                            <span class="product-quantity">${item.quantity}x</span>
+                        </div>
+                        <div class="right_block">
+                            <span class="product-name">${item.name}</span>
+                            <span class="product-price">Rs${parseFloat(item.price).toFixed(2)}</span>
+                            <a href="#" class="remove-from-cart" data-id="${item.id}">
+                                <i class="fa fa-remove"></i>
+                            </a>
+                        </div>
+                    </li>
+                `);
+            });
+        });
+    }
+
+});
 
 })(jQuery);
 

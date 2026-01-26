@@ -677,166 +677,68 @@
                 <div class="pos_content">
                     <div class="special-item owl-carousel">
                         <!-- special item -->
-                        <div class="product-miniature js-product-miniature">
-                            <h1><a href="{{ route('productDetails') }}" class="product_name"
-                                    title="Hummingbird printed t-shirt">Hummingbird printed t-shirt</a></h1>
-                            <div class="img_block">
-                                <a href="{{ route('productDetails') }}" class="thumbnail product-thumbnail">
-                                    <img src="{{ asset('assets/images/product/2-1.webp') }}" alt="harosa product">
-                                </a>
-                                <ul class="product-flag">
-                                    <li class="new"><span>New</span></li>
-                                </ul>
-                                <div class="quick-view">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#product_modal"
-                                        data-original-title="Quick View" class="quick_view"><i
-                                            class="fa fa-search"></i></a>
-                                </div>
-                                <div class="hook-reviews">
-                                    <div class="comments_note">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                        @foreach ($featuredProducts as $product)
+                            <div class="product-miniature js-product-miniature">
+                                <h1><a href="{{ route('productDetails', $product->slug) }}" class="product_name"
+                                        title="{{ $product->name }}">{{ $product->name }}</a></h1>
+                                <div class="img_block">
+                                    <a href="{{ route('productDetails', $product->slug) }}"
+                                        class="thumbnail product-thumbnail">
+                                        <img src="{{ asset('storage/' . $product->files->where('table_name', 'main_image')->first()?->url) }}"
+                                            alt="{{ $product->name }}">
+                                    </a>
+                                    <ul class="product-flag">
+                                        <li class="new"><span>New</span></li>
+                                    </ul>
+                                    <div class="quick-view">
+                                        <a href="#" class="quick_view" data-bs-toggle="modal"
+                                            data-bs-target="#product_modal" data-id="{{ $product->id }}"
+                                            data-name="{{ $product->name }}" data-price="{{ $product->price }}"
+                                            data-discounted_price="{{ $product->discounted_price }}"
+                                            data-description="{{ $product->description }}"
+                                            data-image="{{ asset('storage/' . $product->mainImage?->url) }}"
+                                            data-gallery='@json($product->gallery->map(fn($img) => asset('storage/' . $img->url)))'>
+                                            <i class="fa fa-search"></i>
+                                        </a>
+                                    </div>
+                                    <div class="hook-reviews">
+                                        <div class="comments_note">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-price-and-shipping_top">
+                                        <span class="discount-percentage discount-product">-8%</span>
                                     </div>
                                 </div>
-                                <div class="product-price-and-shipping_top">
-                                    <span class="discount-percentage discount-product">-8%</span>
-                                </div>
-                            </div>
-                            <div class="product_desc">
-                                <div class="manufacturer">
-                                    <a href="{{ route('shop') }}">Studio Design</a>
-                                </div>
-                                <div class="product-desc">
-                                    <p><span>Regular fit, round neckline, short sleeves. Made of extra long staple pima
-                                            cotton. </span></p>
-                                </div>
-                                <div class="product-price-and-shipping">
-                                    <span class="regular-price">$23.90</span>
-                                    <span class="price price-sale">$21.99</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="product-add-to-cart">
-                                        <a href="{{ route('cart') }}">Add to cart</a>
+                                <div class="product_desc">
+                                    <div class="manufacturer">
+                                        <a href="{{ route('shop') }}">Studio Design</a>
+                                    </div>
+                                    <div class="product-desc">
+                                        <p><span>Regular fit, round neckline, short sleeves. Made of extra long staple pima
+                                                cotton. </span></p>
+                                    </div>
+                                    <div class="product-price-and-shipping">
+                                        <span class="regular-price">PKR{{ $product->discounted_price }}</span>
+                                        <span class="price price-sale">PKR{{ $product->price }}</span>
+                                    </div>
+                                    <div class="cart">
+                                        <div class="product-add-to-cart">
+                                            <a href="#" data-id="{{ $product->id }}">Add to cart</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="countdown">
-                                <div class="time_count_down">
-                                    <div data-countdown="2022/08/02"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- special item end -->
-                        <!-- special item -->
-                        <div class="product-miniature js-product-miniature">
-                            <h1><a href="{{ route('productDetails') }}" class="product_name"
-                                    title="Hummingbird printed t-shirt">Hummingbird printed t-shirt</a></h1>
-                            <div class="img_block">
-                                <a href="{{ route('productDetails') }}" class="thumbnail product-thumbnail">
-                                    <img src="{{ asset('assets/images/product/2-2.webp') }}" alt="harosa product">
-                                </a>
-                                <ul class="product-flag">
-                                    <li class="new"><span>New</span></li>
-                                </ul>
-                                <div class="quick-view">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#product_modal"
-                                        data-original-title="Quick View" class="quick_view"><i
-                                            class="fa fa-search"></i></a>
-                                </div>
-                                <div class="hook-reviews">
-                                    <div class="comments_note">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="product-price-and-shipping_top">
-                                    <span class="discount-percentage discount-product">-8%</span>
-                                </div>
-                            </div>
-                            <div class="product_desc">
-                                <div class="manufacturer">
-                                    <a href="{{ route('shop') }}">Studio Design</a>
-                                </div>
-                                <div class="product-desc">
-                                    <p><span>Regular fit, round neckline, short sleeves. Made of extra long staple pima
-                                            cotton. </span></p>
-                                </div>
-                                <div class="product-price-and-shipping">
-                                    <span class="regular-price">$23.90</span>
-                                    <span class="price price-sale">$21.99</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="product-add-to-cart">
-                                        <a href="{{ route('cart') }}">Add to cart</a>
+                                <div class="countdown">
+                                    <div class="time_count_down">
+                                        <div data-countdown="2022/08/02"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="countdown">
-                                <div class="time_count_down">
-                                    <div data-countdown="2022/08/02"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- special item end -->
-                        <!-- special item -->
-                        <div class="product-miniature js-product-miniature">
-                            <h1><a href="{{ route('productDetails') }}" class="product_name"
-                                    title="Hummingbird printed t-shirt">Hummingbird printed t-shirt</a></h1>
-                            <div class="img_block">
-                                <a href="{{ route('productDetails') }}" class="thumbnail product-thumbnail">
-                                    <img src="{{ asset('assets/images/product/2-3.webp') }}" alt="harosa product">
-                                </a>
-                                <ul class="product-flag">
-                                    <li class="new"><span>New</span></li>
-                                </ul>
-                                <div class="quick-view">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#product_modal"
-                                        data-original-title="Quick View" class="quick_view"><i
-                                            class="fa fa-search"></i></a>
-                                </div>
-                                <div class="hook-reviews">
-                                    <div class="comments_note">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="product-price-and-shipping_top">
-                                    <span class="discount-percentage discount-product">-8%</span>
-                                </div>
-                            </div>
-                            <div class="product_desc">
-                                <div class="manufacturer">
-                                    <a href="{{ route('shop') }}">Studio Design</a>
-                                </div>
-                                <div class="product-desc">
-                                    <p><span>Regular fit, round neckline, short sleeves. Made of extra long staple pima
-                                            cotton. </span></p>
-                                </div>
-                                <div class="product-price-and-shipping">
-                                    <span class="regular-price">$23.90</span>
-                                    <span class="price price-sale">$21.99</span>
-                                </div>
-                                <div class="cart">
-                                    <div class="product-add-to-cart">
-                                        <a href="{{ route('cart') }}">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="countdown">
-                                <div class="time_count_down">
-                                    <div data-countdown="2022/08/02"></div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                         <!-- special item end -->
                     </div>
                 </div>
