@@ -99,30 +99,30 @@
 
                                         <!-- Parent Categories -->
                                         <ul class="submenu">
-                                            <li>
-                                                <a href="#">Men <i class="fa fa-angle-right"></i></a>
+                                            @foreach ($categories as $category)
+                                                <li>
+                                                    <a href="{{route('shop', $category->slug)}}">
+                                                        {{ $category->name }}
+                                                        @if ($category->subcategories->count())
+                                                            <i class="fa fa-angle-right"></i>
+                                                        @endif
+                                                    </a>
 
-                                                <!-- Child Categories -->
-                                                <ul class="submenu">
-                                                    <li><a href="#">Shirts</a></li>
-                                                    <li><a href="#">Pants</a></li>
-                                                    <li><a href="#">Shoes</a></li>
-                                                </ul>
-                                            </li>
-
-                                            <li>
-                                                <a href="#">Women <i class="fa fa-angle-right"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="#">Dresses</a></li>
-                                                    <li><a href="#">Tops</a></li>
-                                                    <li><a href="#">Heels</a></li>
-                                                </ul>
-                                            </li>
-
-                                            <li>
-                                                <a href="#">Kids</a>
-                                            </li>
+                                                    @if ($category->subcategories->count())
+                                                        <ul class="submenu">
+                                                            @foreach ($category->subcategories as $sub)
+                                                                <li>
+                                                                    <a href="{{ route('shop', [$category->slug, $sub->slug]) }}">
+                                                                        {{ $sub->name }}
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </li>
+                                            @endforeach
                                         </ul>
+
                                     </li>
                                     {{-- <li><a href="blog.html">Blog</a></li> --}}
                                     <li><a href="{{ route('aboutUs') }}">About Us</a></li>

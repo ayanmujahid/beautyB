@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Backend\{AdminController, CartController, DashboardController, ProductController, NewsletterController, InquiryController, ProductCategoryController, ProductSubCategoryController, UserController};
+use App\Http\Controllers\Backend\{AdminController, CheckoutController, CartController, DashboardController, ProductController, NewsletterController, InquiryController, ProductCategoryController, ProductSubCategoryController, UserController};
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\IndexController;
 
@@ -31,7 +31,7 @@ Route::get('/privacy-policy', [IndexController::class, 'privacyPolicy'])->name('
 Route::get('/product-details/{slug?}', [IndexController::class, 'productDetails'])->name('productDetails');
 Route::get('/return-policy', [IndexController::class, 'returnPolicy'])->name('returnPolicy');
 Route::get('/shipping-policy', [IndexController::class, 'shippingPolicy'])->name('shippingPolicy');
-Route::get('/shop', [IndexController::class, 'shop'])->name('shop');
+Route::get('/shop/{slug?}/{subSlug?}', [IndexController::class, 'shop'])->name('shop');
 Route::get('/signup', [IndexController::class, 'signup'])->name('signup');
 Route::get('/terms-and-conditions', [IndexController::class, 'termsAndConditions'])->name('termsAndConditions');
 Route::get('/testimonials', [IndexController::class, 'testimonials'])->name('testimonials');
@@ -41,6 +41,7 @@ Route::get('/wishlist', [IndexController::class, 'wishlist'])->name('wishlist');
 
 
 // ---------------------------------------For Cart Setup-----------------------------------
+Route::post('/place-order', [CheckoutController::class, 'placeOrder'])->name('place.order');
 
 // Add product to cart
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');

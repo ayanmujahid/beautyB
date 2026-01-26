@@ -110,43 +110,7 @@
                             <li><a href="#">Contact us</a></li>
                         </ul>
                     </div>
-                    <div class="col-sm-6 col-lg-3 links footer_block">
-                        <h3 class="hidden-sm-down">Instagram</h3>
-                        <div class="container">
-                            <div class="row item-instagram">
-                                <div class="col-sm-4">
-                                    <a href="#">
-                                        <img src="assets/images/Instagram/1.webp" alt="harosa Instagram">
-                                    </a>
-                                </div>
-                                <div class="col-sm-4">
-                                    <a href="#">
-                                        <img src="assets/images/Instagram/2.webp" alt="harosa Instagram">
-                                    </a>
-                                </div>
-                                <div class="col-sm-4">
-                                    <a href="#">
-                                        <img src="assets/images/Instagram/3.webp" alt="harosa Instagram">
-                                    </a>
-                                </div>
-                                <div class="col-sm-4">
-                                    <a href="#">
-                                        <img src="assets/images/Instagram/4.webp" alt="harosa Instagram">
-                                    </a>
-                                </div>
-                                <div class="col-sm-4">
-                                    <a href="#">
-                                        <img src="assets/images/Instagram/5.webp" alt="harosa Instagram">
-                                    </a>
-                                </div>
-                                <div class="col-sm-4">
-                                    <a href="#">
-                                        <img src="assets/images/Instagram/6.webp" alt="harosa Instagram">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -164,7 +128,7 @@
                                 href="https://hasthemes.com/">HasThemes</a></p>
                     </div>
                     <div class="col text-md-end">
-                        <img src="assets/images/icons/payment-icon.webp" alt="payment icon">
+                        <img src="{{asset('assets/images/icons/payment-icon.webp')}}" alt="payment icon">
                     </div>
                 </div>
             </div>
