@@ -76,7 +76,7 @@
                         <div class="footer-contact">
                             <p class="address add">123 Main Street, Anytown, CA 12345 - USA.</p>
                             <p class="phone add">0314-2957246</p>
-                            <p class="email add"><a href="#">yourmail@domain.com</a></p>
+                            <p class="email add"><a href="#">support@beautybstore.com</a></p>
                             <p class="time add">Working time: 9.00 -21.00</p>
                         </div>
                         <div class="social_follow">

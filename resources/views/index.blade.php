@@ -619,7 +619,7 @@
                                         orci luctus et ultrices posuere cubilia Etiam porttitor, lacus in luctus molestie
                                     </div>
                                     <p class="des_namepost"><span>John Doe </span></p>
-                                    <p class="des_email">demo@example.com</p>
+                                    <p class="des_email">support@beautybstore.com</p>
                                 </div>
                             </div>
                         </div>
@@ -637,7 +637,7 @@
                                         orci luctus et ultrices posuere cubilia Etiam porttitor, lacus in luctus molestie
                                     </div>
                                     <p class="des_namepost"><span>John Doe </span></p>
-                                    <p class="des_email">demo@example.com</p>
+                                    <p class="des_email">support@beautybstore.com</p>
                                 </div>
                             </div>
                         </div>
@@ -655,7 +655,7 @@
                                         orci luctus et ultrices posuere cubilia Etiam porttitor, lacus in luctus molestie
                                     </div>
                                     <p class="des_namepost"><span>John Doe </span></p>
-                                    <p class="des_email">demo@example.com</p>
+                                    <p class="des_email">support@beautybstore.com</p>
                                 </div>
                             </div>
                         </div>
