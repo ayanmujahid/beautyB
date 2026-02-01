@@ -82,11 +82,11 @@
                     </div>
                     <div class="product-prices">
                         <div class="product-discount">
-                            <span class="regular-price">PKR{{ $product->discounted_price }}</span>
+                            <span class="regular-price">PKR{{ $product->price }}</span>
                         </div>
                         <div class="product-price h5 has-discount">
                             <div class="current-price">
-                                <span>PKR{{ $product->price }}</span>
+                                <span>PKR{{ $product->discounted_price }}</span>
                                 <span class="discount discount-percentage">Save 8%</span>
                             </div>
                         </div>
@@ -194,8 +194,8 @@
                                         <h1> <a href="{{ route('productDetails', $product->slug) }}" class="product_name"
                                                 title="Hummingbird printed t-shirt">{{$product->name}}</a></h1>
                                         <div class="product-price-and-shipping">
-                                            <span class="regular-price">PKR{{$product->discounted_price}}</span>
-                                            <span class="price price-sale">PKR{{$product->price}}</span>
+                                            <span class="regular-price">PKR{{$product->price}}</span>
+                                            <span class="price price-sale">PKR{{$product->discounted_price}}</span>
                                         </div>
                                         <div class="cart">
                                             <div class="product-add-to-cart">

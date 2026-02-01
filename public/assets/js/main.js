@@ -563,8 +563,8 @@
             // Update product info
             $('#product_modal .namne_details').text(product.name);
             // Update product info
-            $('#product_modal .regular-price').text('PKR ' + product.discounted_price.toFixed(2)); // discounted shown as "regular"
-            $('#product_modal .discounted-price').text('PKR ' + product.price.toFixed(2)); // original price shown as "sale"
+            $('#product_modal .regular-price').text('PKR ' + product.price.toFixed(2)); // discounted shown as "regular"
+            $('#product_modal .discounted-price').text('PKR ' + product.discounted_price.toFixed(2)); // original price shown as "sale"
 
 
             let discountPercent = 0;

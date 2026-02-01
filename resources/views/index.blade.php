@@ -270,9 +270,9 @@
                                                 </h1>
                                                 <div class="product-price-and-shipping">
                                                     <span class="regular-price">PKR
-                                                        {{ $product->discounted_price }}</span>
-                                                    <span class="price price-sale">PKR
                                                         {{ $product->price }}</span>
+                                                    <span class="price price-sale">PKR
+                                                        {{ $product->discounted_price }}</span>
                                                 </div>
                                                 <div class="cart">
                                                     <div class="product-add-to-cart">
@@ -340,9 +340,9 @@
                                                 </h1>
                                                 <div class="product-price-and-shipping">
                                                     <span class="regular-price">PKR
-                                                        {{ $product->discounted_price }}</span>
-                                                    <span class="price price-sale">PKR
                                                         {{ $product->price }}</span>
+                                                    <span class="price price-sale">PKR
+                                                        {{ $product->discounted_price }}</span>
                                                 </div>
                                                 <div class="cart">
                                                     <div class="product-add-to-cart">
@@ -723,12 +723,13 @@
                                                 cotton. </span></p>
                                     </div>
                                     <div class="product-price-and-shipping">
-                                        <span class="regular-price">PKR{{ $product->discounted_price }}</span>
-                                        <span class="price price-sale">PKR{{ $product->price }}</span>
+                                        <span class="regular-price">PKR{{ $product->price }}</span>
+                                        <span class="price price-sale">PKR{{ $product->discounted_price }}</span>
                                     </div>
                                     <div class="cart">
                                         <div class="product-add-to-cart">
-                                            <a href="#" data-id="{{ $product->id }}">Add to cart</a>
+                                            <a href="#" class="add-cart" data-id="{{ $product->id }}">Add to
+                                                cart</a>
                                         </div>
                                     </div>
                                 </div>
